@@ -39,6 +39,7 @@ class Queue():
 
 customQ = Queue()
 
+
 import random
 
 class Stack():
@@ -82,6 +83,7 @@ customS = Stack()
 
 
 
+
 class Atraccion:
     def __init__(self, name, capacity):
         self.name = name
@@ -100,6 +102,7 @@ class Atraccion:
         res = str(v) + " " + self.mostrar_visitantes_recursivo(stack)
         stack.push(v)
         return res
+
 
 
 class ParqueDiversiones:
@@ -185,14 +188,14 @@ if __name__ == "__main__":
     parque = ParqueDiversiones()
     parque.inicializar_defecto()
 
-
+  
     visitantes = ["A1", "N1", "A2", "N2", "A3", "A4", "N3", "G5", "R7", "E90"]
     for v in visitantes:
         parque.agregar_visitante(v)
 
     parque.mostrar_estado()
 
-
+  
     parque.ejecutar_turno()
     parque.ejecutar_turno()
     parque.ejecutar_turno()
@@ -201,10 +204,11 @@ if __name__ == "__main__":
 
     parque.mostrar_estado()
 
-
+  
     parque.eliminar_atraccion("Rueda de la Fortuna")
     parque.mostrar_estado()
 
-
+  
     parque.agregar_atraccion("Simulador 4D", 2)
     parque.mostrar_estado()
+
