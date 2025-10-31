@@ -138,165 +138,6 @@ class Queue:
             self.enqueue(random.randint(min, max))
 
 "_____"
-
-
-
-class BinaryTreeNode:
-    def __init__(self, data):
-        self.data = data
-        self.leftchild = None
-        self.rightchild = None
-
-
-def printTree(Node, prefix="", is_left=True):
-    if not Node:
-        return
-    if Node.rightchild:
-        printTree(Node.rightchild, prefix + ("│    " if is_left else "    "), False)
-    print(prefix + ("└── " if is_left else "┌── ") + str(Node.data))
-    if Node.leftchild:
-        printTree(Node.leftchild, prefix + ("     " if is_left else "│   "), True)
-
-
-def insertar_heap(root, valor):
-    nuevo = BinaryTreeNode(valor)
-    if root is None:
-        return nuevo
-
-    q = Queue()
-    q.enqueue(root)
-    while not q.is_empty():
-        temp = q.dequeue()
-        if temp.leftchild is None:
-            temp.leftchild = nuevo
-            balancear_arriba(root, nuevo)
-            return root
-        else:
-            q.enqueue(temp.leftchild)
-
-        if temp.rightchild is None:
-            temp.rightchild = nuevo
-            balancear_arriba(root, nuevo)
-            return root
-        else:
-            q.enqueue(temp.rightchild)
-    return root
-
-
-def encontrar_padre(root, nodo):
-    if root is None or root == nodo:
-        return None
-    if root.leftchild == nodo or root.rightchild == nodo:
-        return root
-    izq = encontrar_padre(root.leftchild, nodo)
-    if izq:
-        return izq
-    return encontrar_padre(root.rightchild, nodo)
-
-
-def balancear_arriba(root, nodo):
-    padre = encontrar_padre(root, nodo)
-    if padre is None:
-        return
-    if nodo.data < padre.data:
-        nodo.data, padre.data = padre.data, nodo.data
-        balancear_arriba(root, padre)
-
-
-def obtener_ultimo_nodo(root):
-    if root is None:
-        return None
-    q = Queue()
-    q.enqueue(root)
-    ultimo = None
-    while not q.is_empty():
-        ultimo = q.dequeue()
-        if ultimo.leftchild:
-            q.enqueue(ultimo.leftchild)
-        if ultimo.rightchild:
-            q.enqueue(ultimo.rightchild)
-    return ultimo
-
-
-def eliminar_raiz(root):
-    if root is None:
-        return None
-    ultimo = obtener_ultimo_nodo(root)
-    if ultimo == root:
-        return None
-
-    q = Queue()
-    q.enqueue(root)
-    while not q.is_empty():
-        temp = q.dequeue()
-        if temp.leftchild == ultimo:
-            temp.leftchild = None
-            break
-        elif temp.rightchild == ultimo:
-            temp.rightchild = None
-            break
-        if temp.leftchild:
-            q.enqueue(temp.leftchild)
-        if temp.rightchild:
-            q.enqueue(temp.rightchild)
-
-    root.data = ultimo.data
-    heapify_down(root)
-    return root
-
-
-def heapify_down(root):
-    if root is None:
-        return
-    menor = root
-    if root.leftchild and root.leftchild.data < menor.data:
-        menor = root.leftchild
-    if root.rightchild and root.rightchild.data < menor.data:
-        menor = root.rightchild
-    if menor != root:
-        root.data, menor.data = menor.data, root.data
-        heapify_down(menor)
-
-
-def recorrido_por_niveles(root):
-    if root is None:
-        print("Árbol vacío")
-        return
-    q = Queue()
-    q.enqueue(root)
-    while not q.is_empty():
-        temp = q.dequeue()
-        print(temp.data, end="  ")
-        if temp.leftchild:
-            q.enqueue(temp.leftchild)
-        if temp.rightchild:
-            q.enqueue(temp.rightchild)
-    print()
-
-
-# ----------- PRUEBA PRINCIPAL -----------
-
-root = None
-pacientes = [8, 3, 10, 1, 6, 14, 4]
-
-for p in pacientes:
-    root = insertar_heap(root, p)
-
-print("Árbol (Heap de urgencias):")
-printTree(root)
-
-print("\nRecorrido por niveles:")
-recorrido_por_niveles(root)
-
-print("\nAtendiendo al paciente más urgente (eliminando raíz):")
-root = eliminar_raiz(root)
-printTree(root)
-
-print("\nNuevo recorrido por niveles:")
-recorrido_por_niveles(root)
-
-"______"
-
 class Paciente:
     def __init__(self, id, nombre, nivel_emergencia, orden_llegada):
         self.id = id
@@ -456,6 +297,7 @@ def mostrarPorNivel(root, nivel):
     if not found:
         print("Ninguno con ese nivel.")
 
+
 "___N__"
 
 def reportePacientes(root, contador_atendidos):
@@ -593,7 +435,7 @@ def actualizarEmergencia(root, id_paciente, nuevo_nivel):
 
 # ---------------- DEMOSTRACIÓN ---------------- #
 
-root = None
+"""root = None
 contador_atendidos = 0
 
 root = insertPaciente(root, Paciente(1, "Ana", 2, 1))
@@ -614,9 +456,9 @@ print("\n--- Programar cirugía ---")
 root, atendido, contador_atendidos = programarCirugia(root, contador_atendidos)
 print("Paciente atendido:", atendido)
 
-reportePacientes(root, contador_atendidos)
+reportePacientes(root, contador_atendidos)"""
 
-"""root = None
+root = None
 root = insertPaciente(root, Paciente(1, "Ana", 2, 1))
 root = insertPaciente(root, Paciente(2, "Luis", 1, 2))
 root = insertPaciente(root, Paciente(3, "María", 3, 3))
@@ -635,4 +477,4 @@ print("\n--- Lista actualizada ---")
 mostrarPacientes(root)
 
 print("\n--- Pacientes con nivel de emergencia 1 ---")
-mostrarPorNivel(root, 1)"""
+mostrarPorNivel(root, 1)
